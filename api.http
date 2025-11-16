@@ -2,6 +2,7 @@
 ### Base URL - Update if running on different host/port
 @baseUrl = http://localhost:3000
 @contentType = application/json
+@apiKey = YOUR_API_KEY
 
 ### Variables
 @analyzeEndpoint = {{baseUrl}}/analyze
@@ -21,6 +22,7 @@ Accept: text/html
 ### POST Analyze - Simple text input
 POST {{analyzeEndpoint}}
 Content-Type: {{contentType}}
+x-api-key: {{apiKey}}
 
 {
   "input": "What are my spending patterns this month?"
@@ -31,6 +33,7 @@ Content-Type: {{contentType}}
 ### POST Analyze - Transaction data analysis
 POST {{analyzeEndpoint}}
 Content-Type: {{contentType}}
+x-api-key: {{apiKey}}
 
 {
   "input": "Analyze my transactions and tell me which category I spend the most on",
@@ -61,6 +64,7 @@ Content-Type: {{contentType}}
 ### POST Analyze - Spending summary request
 POST {{analyzeEndpoint}}
 Content-Type: {{contentType}}
+x-api-key: {{apiKey}}
 
 {
   "input": "Give me a summary of my spending by category for January 2024"
@@ -71,6 +75,7 @@ Content-Type: {{contentType}}
 ### POST Analyze - Specific transaction question
 POST {{analyzeEndpoint}}
 Content-Type: {{contentType}}
+x-api-key: {{apiKey}}
 
 {
   "input": "What did I spend at Amazon last month?"
@@ -81,6 +86,7 @@ Content-Type: {{contentType}}
 ### POST Analyze - Budget analysis
 POST {{analyzeEndpoint}}
 Content-Type: {{contentType}}
+x-api-key: {{apiKey}}
 
 {
   "input": "Compare my spending this month to my budget of $2000"
@@ -93,6 +99,7 @@ Content-Type: {{contentType}}
 ### POST Analyze - Empty body
 POST {{analyzeEndpoint}}
 Content-Type: {{contentType}}
+x-api-key: {{apiKey}}
 
 {}
 
@@ -101,6 +108,7 @@ Content-Type: {{contentType}}
 ### POST Analyze - Missing input
 POST {{analyzeEndpoint}}
 Content-Type: {{contentType}}
+x-api-key: {{apiKey}}
 
 {
   "transactions": []
@@ -125,6 +133,7 @@ Content-Type: {{contentType}}
 ### POST Analyze - Simple string input (alternative format)
 POST {{analyzeEndpoint}}
 Content-Type: {{contentType}}
+x-api-key: {{apiKey}}
 
 "Can you help me understand my spending habits?"
 

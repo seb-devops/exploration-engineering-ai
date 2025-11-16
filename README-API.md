@@ -23,20 +23,51 @@ npm start
 
 The server runs on `http://localhost:3000` by default (configurable via `PORT` environment variable).
 
+### Required Environment Variables
+
+Set the following variables in your `.env` file to secure and control the API surface:
+
+| Variable | Description | Default |
+| --- | --- | --- |
+| `ANALYZE_API_KEY` | Shared secret required in the `x-api-key` header. Requests without it receive `401`. | _(unset ⇒ auth disabled)_ |
+| `RATE_LIMIT_MAX` | Max requests per IP within the rate-limit window. | `100` |
+| `RATE_LIMIT_WINDOW_MS` | Window duration in milliseconds. | `900000` (15 minutes) |
+| `BODY_LIMIT` | Maximum JSON payload size processed by Express. | `1mb` |
+| `CORS_ORIGIN` | Comma-separated list of allowed origins. | `*` |
+| `TRUST_PROXY` | Express `trust proxy` setting. | `loopback, linklocal, uniquelocal` |
+
 ## Available Endpoints
 
 ### GET `/`
 Home page - renders the Express index view.
 
-### POST `/users/analyze`
+### POST `/analyze`
 Financial agent analysis endpoint. Sends a request to the financial agent for transaction analysis.
 
 **Request Body:**
 ```json
 {
   "input": "Your question or analysis request",
-  "transactions": [ /* optional transaction data */ ]
+  "transactions": [
+    {
+      "date": "2024-01-15",
+      "amount": 45.50,
+      "vendor": "Starbucks",
+      "category": "Food & Dining",
+      "note": "Optional contextual note"
+    }
+  ],
+  "metadata": {
+    "accountId": "abc-123"
+  }
 }
+```
+
+**Headers:**
+
+```
+Content-Type: application/json
+x-api-key: <value of ANALYZE_API_KEY>
 ```
 
 **Response:**
@@ -64,6 +95,7 @@ The `api.http` file includes tests for:
 - ✅ Budget comparisons
 - ✅ Error cases (empty body, invalid endpoints)
 - ✅ Complex financial queries
+- ✅ Auth failures and rate limit responses
 
 ## Environment Variables
 
@@ -77,5 +109,7 @@ You can customize the base URL by modifying the `@baseUrl` variable at the top o
 
 - **Connection refused**: Make sure the server is running (`npm run dev` or `npm start`)
 - **404 errors**: Check that the endpoint path is correct (`/users/analyze`)
+- **401 errors**: Confirm that you passed the correct `x-api-key` header.
+- **429 errors**: You are being rate limited. Retry after the configured window or adjust `RATE_LIMIT_MAX`.
 - **500 errors**: Check server logs for details. The agent might not be built or initialized properly.
 
