@@ -1,0 +1,148 @@
+### Exploration Engineering AI API Tests
+### Base URL - Update if running on different host/port
+@baseUrl = http://localhost:3000
+@contentType = application/json
+
+### Variables
+@analyzeEndpoint = {{baseUrl}}/analyze
+
+###############################################
+# Health Check & Home Page
+###############################################
+
+### GET Home Page
+GET {{baseUrl}}/
+Accept: text/html
+
+###############################################
+# Financial Agent Analysis Endpoint
+###############################################
+
+### POST Analyze - Simple text input
+POST {{analyzeEndpoint}}
+Content-Type: {{contentType}}
+
+{
+  "input": "What are my spending patterns this month?"
+}
+
+###
+
+### POST Analyze - Transaction data analysis
+POST {{analyzeEndpoint}}
+Content-Type: {{contentType}}
+
+{
+  "input": "Analyze my transactions and tell me which category I spend the most on",
+  "transactions": [
+    {
+      "date": "2024-01-15",
+      "amount": 45.50,
+      "vendor": "Starbucks",
+      "category": "Food & Dining"
+    },
+    {
+      "date": "2024-01-16",
+      "amount": 120.00,
+      "vendor": "Amazon",
+      "category": "Shopping"
+    },
+    {
+      "date": "2024-01-17",
+      "amount": 89.99,
+      "vendor": "Shell Gas Station",
+      "category": "Transportation"
+    }
+  ]
+}
+
+###
+
+### POST Analyze - Spending summary request
+POST {{analyzeEndpoint}}
+Content-Type: {{contentType}}
+
+{
+  "input": "Give me a summary of my spending by category for January 2024"
+}
+
+###
+
+### POST Analyze - Specific transaction question
+POST {{analyzeEndpoint}}
+Content-Type: {{contentType}}
+
+{
+  "input": "What did I spend at Amazon last month?"
+}
+
+###
+
+### POST Analyze - Budget analysis
+POST {{analyzeEndpoint}}
+Content-Type: {{contentType}}
+
+{
+  "input": "Compare my spending this month to my budget of $2000"
+}
+
+###############################################
+# Error Cases
+###############################################
+
+### POST Analyze - Empty body
+POST {{analyzeEndpoint}}
+Content-Type: {{contentType}}
+
+{}
+
+###
+
+### POST Analyze - Missing input
+POST {{analyzeEndpoint}}
+Content-Type: {{contentType}}
+
+{
+  "transactions": []
+}
+
+###
+
+### POST Analyze - Invalid endpoint (404 test)
+POST {{baseUrl}}/users/invalid
+Content-Type: {{contentType}}
+
+{
+  "input": "test"
+}
+
+###
+
+###############################################
+# Alternative Formats
+###############################################
+
+### POST Analyze - Simple string input (alternative format)
+POST {{analyzeEndpoint}}
+Content-Type: {{contentType}}
+
+"Can you help me understand my spending habits?"
+
+###
+
+### POST Analyze - Complex financial query
+POST {{analyzeEndpoint}}
+Content-Type: {{contentType}}
+
+{
+  "input": "I want to save more money. Based on my transaction history, what are the top 3 areas where I can reduce spending?",
+  "transactions": [
+    {"date": "2024-01-01", "amount": 15.00, "vendor": "Coffee Shop", "category": "Food"},
+    {"date": "2024-01-02", "amount": 25.00, "vendor": "Coffee Shop", "category": "Food"},
+    {"date": "2024-01-03", "amount": 18.50, "vendor": "Coffee Shop", "category": "Food"},
+    {"date": "2024-01-05", "amount": 150.00, "vendor": "Grocery Store", "category": "Food"},
+    {"date": "2024-01-10", "amount": 50.00, "vendor": "Streaming Service", "category": "Entertainment"},
+    {"date": "2024-01-15", "amount": 200.00, "vendor": "Restaurant", "category": "Food"}
+  ]
+}
+
