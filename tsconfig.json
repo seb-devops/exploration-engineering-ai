@@ -27,6 +27,6 @@
     "node_modules",
     "dist",
     "agent-falcon",
-    "src/agent"
+    "packages"
   ]
 }

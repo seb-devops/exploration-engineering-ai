@@ -4,6 +4,18 @@
  * Module dependencies.
  */
 
+// Load environment variables from .env file at the root
+import { config } from 'dotenv';
+import { resolve } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load .env file from project root (two levels up from src/bin/)
+config({ path: resolve(__dirname, '../../.env') });
+
 import app from '../app.js';
 import debug from 'debug';
 import http from 'http';

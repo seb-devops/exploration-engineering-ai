@@ -3,11 +3,13 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**", ".mastra/**"]
+      "outputs": ["dist/**", "packages/**/dist/**", ".next/**", "!.next/cache/**", ".mastra/**"],
+      "env": ["OPENAI_API_KEY", "NODE_ENV"]
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": ["OPENAI_API_KEY", "NODE_ENV", "PORT"]
     },
     "type-check": {
       "dependsOn": ["^build"],

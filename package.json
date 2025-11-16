@@ -5,13 +5,15 @@
   "main": "dist/app.js",
   "type": "module",
   "private": true,
-  "packageManager": "npm@9.2.0",
+  "packageManager": "pnpm@9.15.5",
   "workspaces": [
-    "src/agent"
+    "packages/*"
   ],
   "scripts": {
+    "predev": "pnpm --filter @exploration/agent build",
     "build": "npx tsc --noEmitOnError false || (echo 'Build completed with type errors (agent builds separately via Turbo)' && exit 0)",
     "dev": "tsx watch src/bin/www.ts",
+    "prebuild": "pnpm --filter @exploration/agent build",
     "start": "node dist/bin/www.js",
     "type-check": "npx tsc --noEmit"
   },
@@ -19,8 +21,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@exploration/agent": "workspace:*",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^17.2.3",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",

@@ -2,13 +2,15 @@
   "name": "@exploration/agent",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "mastra dev",
-    "build": "mastra build",
+    "build": "tsc -p tsconfig.build.json",
     "start": "mastra start",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "prepare": "tsc -p tsconfig.build.json"
   },
   "keywords": [],
   "author": "",

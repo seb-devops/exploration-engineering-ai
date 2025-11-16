@@ -1,5 +1,5 @@
 import createError from 'http-errors';
-import express, { Request, Response, NextFunction } from 'express';
+import express, { type Application, type Request, type Response, type NextFunction } from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
@@ -12,7 +12,7 @@ import analyzerRouter from './routes/analyzer.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const app = express();
+const app: Application = express();
 
 // view engine setup
 app.set('views', path.join(process.cwd(), 'agent-falcon/views'));

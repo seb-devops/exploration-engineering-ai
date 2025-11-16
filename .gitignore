@@ -78,6 +78,9 @@ web_modules/
 .next
 out
 
+# Package build output
+packages/**/dist
+
 # Nuxt.js build / generate output
 .nuxt
 dist
@@ -133,6 +136,10 @@ dist
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# pnpm
+.pnpm-store
+.pnpm-debug.log
 
 # Vite logs files
 vite.config.js.timestamp-*

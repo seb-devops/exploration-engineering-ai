@@ -1,25 +1,13 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { type Request, type Response, type NextFunction, type Router } from 'express';
 import createError from 'http-errors';
 import type { Mastra } from '@mastra/core/mastra';
+import { mastra } from '@exploration/agent';
 
-// Agent is built separately by Turbo - using dynamic import to avoid type-checking during root build
-// Runtime import - agent is built separately by Turbo
-// @ts-ignore - Agent module is built separately, types available at runtime
-let mastra: Mastra | null = null;
-async function getMastra(): Promise<Mastra> {
-  if (!mastra) {
-    // @ts-ignore - Dynamic import of agent module built separately
-    const agentModule = await import('../agent/src/mastra/index.js');
-    mastra = agentModule.mastra;
-  }
-  return mastra;
-}
+const router: Router = express.Router();
 
-const router = express.Router();
-
-router.post('/analyze', async function(req: Request, res: Response, next: NextFunction) {   
+router.post('/', async function(req: Request, res: Response, next: NextFunction) {   
 try {
-    const mastraInstance = await getMastra();
+    const mastraInstance: Mastra = mastra;
     const agent = mastraInstance.getAgent('financialAgent');
     if (!agent) {
         return res.status(404).json({ 
